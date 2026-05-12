@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mạnh Khang Digital</title>
+
+<style>
+:root{
+    --primary:#00ffd5;
+    --bg:#050505;
+    --card:#121212;
+    --border:#2a2a2a;
+    --text:#ffffff;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Segoe UI,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:85px;
+    background:#000;
+    border-right:1px solid #222;
+    padding-top:20px;
+    text-align:center;
+}
+
+.nav-item{
+    margin-bottom:25px;
+    color:#666;
+    font-size:11px;
+}
+
+.nav-item.active{
+    color:var(--primary);
+}
+
+.main{
+    flex:1;
+    padding:20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+}
+
+h2{
+    margin-top:0;
+    color:var(--primary);
+    border-bottom:1px solid #333;
+    padding-bottom:10px;
+}
+
+label{
+    display:block;
+    margin:12px 0 6px;
+    color:#999;
+    font-size:14px;
+}
+
+input,select{
+    width:100%;
+    background:#000;
+    color:white;
+    border:1px solid #444;
+    border-radius:10px;
+    padding:12px;
+    font-size:15px;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:var(--primary);
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:14px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.01);
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:black;
+}
+
+.btn-danger{
+    background:#ff3d3d;
+    color:white;
+}
+
+.btn-export{
+    background:#ffaa00;
+    color:black;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.stat-box{
+    background:black;
+    border:1px solid #222;
+    border-radius:12px;
+    padding:20px;
+    text-align:center;
+}
+
+.stat-box small{
+    display:block;
+    color:#888;
+    margin-bottom:8px;
+}
+
+.stat-box b{
+    font-size:24px;
+    color:var(--primary);
+}
+
+.qr-box{
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    text-align:center;
+}
+
+.qr-box img{
+    width:100%;
+    max-width:220px;
+}
+
+.bank-text{
+    color:black;
+    font-weight:bold;
+    margin-top:10px;
+    line-height:1.6;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th{
+    color:#666;
+    text-align:left;
+    padding:12px;
+    border-bottom:1px solid #333;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #222;
+}
+
+.profit{
+    color:#00ffd5;
+    font-weight:bold;
+}
+
+.empty{
+    text-align:center;
+    color:#666;
+    padding:25px;
+}
+
+@media(max-width:900px){
+
+    .container{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        display:flex;
+        justify-content:center;
+        gap:25px;
+        padding:15px 0;
+    }
+
+    .main{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="sidebar">
+    <div class="nav-item active">🏪<br>GIAO DỊCH</div>
+    <div class="nav-item">📈<br>BÁO CÁO</div>
+</div>
+
+<div class="main">
+
+<div>
+
+<div class="card">
+<h2>TẠO GIAO DỊCH</h2>
+
+<label>Loại dịch vụ</label>
+<select id="srvType">
+
+    <option value="Bán Thẻ Cào Vina">
+        Bán thẻ cào Vina
+    </option>
+
+    <option value="Bán Thẻ Cào Viettel">
+        Bán thẻ cào Viettel
+    </option>
+
+    <option value="Bán Thẻ Cào Mobi">
+        Bán thẻ cào Mobi
+    </option>
+
+    <option value="Bán Thẻ Cào Vietnamobile">
+        Bán thẻ cào Vietnamobile
+    </option>
+
+    <option value="Bán Thẻ Game Garena">
+        Bán thẻ game Garena
+    </option>
+
+    <option value="Bán Thẻ Game Zing">
+        Bán thẻ game Zing
+    </option>
+
+    <option value="Chuyển Tiền Ngân Hàng">
+        Chuyển tiền tất cả Ngân Hàng
+    </option>
+
+    <option value="Nạp Ví MoMo">
+        Nạp ví MoMo
+    </option>
+
+    <option value="Nạp Ví ZaloPay">
+        Nạp ví ZaloPay
+    </option>
+
+</select>
+
+<label>Số tiền giao dịch</label>
+<input type="number" id="srvAmount" placeholder="Ví dụ: 100000">
+
+<label>Phí / Lợi nhuận</label>
+<input type="number" id="srvFee" value="0">
+
+<button class="btn btn-primary" onclick="addTransaction()">
+HOÀN TẤT GIAO DỊCH
+</button>
+</div>
+
+<div class="card">
+<h2>QR THANH TOÁN</h2>
+
+<div class="qr-box">
+<img src="https://img.vietqr.io/image/techcombank-19073707062019-compact2.png">
+
+<div class="bank-text">
+TECHCOMBANK<br>
+19073707062019
+</div>
+</div>
+</div>
+
+</div>
+
+<div>
+
+<div class="card">
+<h2>BÁO CÁO HÔM NAY</h2>
+
+<div class="stats">
+
+<div class="stat-box">
+<small>TỔNG THU</small>
+<b id="totalRevenue">0đ</b>
+</div>
+
+<div class="stat-box">
+<small>LỢI NHUẬN</small>
+<b id="totalProfit" style="color:#ffcc00;">0đ</b>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2>LỊCH SỬ GIAO DỊCH</h2>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Dịch vụ</th>
+<th>Tiền</th>
+<th>Lợi nhuận</th>
+<th>Giờ</th>
+</tr>
+</thead>
+<tbody id="historyTable"></tbody>
+</table>
+</div>
+
+<button class="btn btn-danger" onclick="clearHistory()">
+XÓA TOÀN BỘ LỊCH SỬ
+</button>
+
+<button class="btn btn-export" onclick="exportData()">
+XUẤT FILE BACKUP
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let logs = JSON.parse(localStorage.getItem('khang_logs')) || [];
+
+function saveData(){
+    localStorage.setItem('khang_logs', JSON.stringify(logs));
+}
+
+function addTransaction(){
+
+    const type = document.getElementById('srvType').value;
+    const amount = parseInt(document.getElementById('srvAmount').value) || 0;
+    const fee = parseInt(document.getElementById('srvFee').value) || 0;
+
+    if(amount <= 0){
+        alert('Vui lòng nhập số tiền hợp lệ');
+        return;
+    }
+
+    const time = new Date().toLocaleTimeString([], {
+        hour:'2-digit',
+        minute:'2-digit'
+    });
+
+    logs.push({
+        type,
+        amount,
+        fee,
+        time
+    });
+
+    saveData();
+
+    document.getElementById('srvAmount').value='';
+    document.getElementById('srvFee').value='0';
+
+    updateUI();
+}
+
+function updateUI(){
+
+    const table = document.getElementById('historyTable');
+
+    let totalRevenue = 0;
+    let totalProfit = 0;
+
+    table.innerHTML='';
+
+    if(logs.length === 0){
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="4" class="empty">
+                    Chưa có giao dịch nào
+                </td>
+            </tr>
+        `;
+    }
+
+    logs.slice().reverse().forEach(log => {
+
+        totalRevenue += log.amount;
+        totalProfit += log.fee;
+
+        table.innerHTML += `
+            <tr>
+                <td>${log.type}</td>
+                <td>${log.amount.toLocaleString()}đ</td>
+                <td class="profit">+${log.fee.toLocaleString()}đ</td>
+                <td>${log.time}</td>
+            </tr>
+        `;
+    });
+
+    document.getElementById('totalRevenue').innerText =
+        totalRevenue.toLocaleString() + 'đ';
+
+    document.getElementById('totalProfit').innerText =
+        totalProfit.toLocaleString() + 'đ';
+}
+
+function clearHistory(){
+
+    const confirmDelete = confirm('Bạn muốn xóa toàn bộ lịch sử?');
+
+    if(confirmDelete){
+
+        logs = [];
+
+        saveData();
+
+        updateUI();
+    }
+}
+
+function exportData(){
+
+    const dataStr = JSON.stringify(logs, null, 2);
+
+    const blob = new Blob([dataStr], {
+        type:'application/json'
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = 'manhkhang_backup.json';
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+updateUI();
+
+</script>
+
+</body>
+</html>
+```
