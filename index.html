@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Mạnh Khang Digital</title>
 
 <style>
+
 :root{
     --primary:#00ffd5;
     --bg:#050505;
@@ -77,7 +79,8 @@ label{
     font-size:14px;
 }
 
-input,select{
+input,
+select{
     width:100%;
     background:#000;
     color:white;
@@ -218,8 +221,10 @@ td{
         grid-template-columns:1fr;
     }
 }
+
 </style>
 </head>
+
 <body>
 
 <div class="container">
@@ -231,12 +236,16 @@ td{
 
 <div class="main">
 
+<!-- LEFT -->
+
 <div>
 
 <div class="card">
+
 <h2>TẠO GIAO DỊCH</h2>
 
 <label>Loại dịch vụ</label>
+
 <select id="srvType">
 
     <option value="Bán Thẻ Cào Vina">
@@ -278,56 +287,80 @@ td{
 </select>
 
 <label>Số tiền giao dịch</label>
-<input type="number" id="srvAmount" placeholder="Ví dụ: 100000">
+
+<input 
+    type="number"
+    id="srvAmount"
+    placeholder="Ví dụ: 100000"
+    oninput="calculateFee()"
+>
 
 <label>Phí / Lợi nhuận</label>
-<input type="number" id="srvFee" value="0">
+
+<input 
+    type="number"
+    id="srvFee"
+    value="0"
+    readonly
+>
 
 <button class="btn btn-primary" onclick="addTransaction()">
-HOÀN TẤT GIAO DỊCH
+    HOÀN TẤT GIAO DỊCH
 </button>
+
 </div>
 
 <div class="card">
+
 <h2>QR THANH TOÁN</h2>
 
 <div class="qr-box">
+
 <img src="https://img.vietqr.io/image/techcombank-19073707062019-compact2.png">
 
 <div class="bank-text">
-TECHCOMBANK<br>
-19073707062019
-</div>
-</div>
+    TECHCOMBANK<br>
+    19073707062019
 </div>
 
 </div>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
 
 <div>
 
 <div class="card">
+
 <h2>BÁO CÁO HÔM NAY</h2>
 
 <div class="stats">
 
 <div class="stat-box">
-<small>TỔNG THU</small>
-<b id="totalRevenue">0đ</b>
+    <small>TỔNG THU</small>
+    <b id="totalRevenue">0đ</b>
 </div>
 
 <div class="stat-box">
-<small>LỢI NHUẬN</small>
-<b id="totalProfit" style="color:#ffcc00;">0đ</b>
+    <small>LỢI NHUẬN</small>
+    <b id="totalProfit" style="color:#ffcc00;">0đ</b>
 </div>
 
 </div>
+
 </div>
 
 <div class="card">
+
 <h2>LỊCH SỬ GIAO DỊCH</h2>
 
 <div class="table-wrap">
+
 <table>
+
 <thead>
 <tr>
 <th>Dịch vụ</th>
@@ -336,16 +369,19 @@ TECHCOMBANK<br>
 <th>Giờ</th>
 </tr>
 </thead>
+
 <tbody id="historyTable"></tbody>
+
 </table>
+
 </div>
 
 <button class="btn btn-danger" onclick="clearHistory()">
-XÓA TOÀN BỘ LỊCH SỬ
+    XÓA TOÀN BỘ LỊCH SỬ
 </button>
 
 <button class="btn btn-export" onclick="exportData()">
-XUẤT FILE BACKUP
+    XUẤT FILE BACKUP
 </button>
 
 </div>
@@ -358,19 +394,56 @@ XUẤT FILE BACKUP
 
 <script>
 
-let logs = JSON.parse(localStorage.getItem('khang_logs')) || [];
+let logs = JSON.parse(
+    localStorage.getItem('khang_logs')
+) || [];
 
 function saveData(){
-    localStorage.setItem('khang_logs', JSON.stringify(logs));
+
+    localStorage.setItem(
+        'khang_logs',
+        JSON.stringify(logs)
+    );
+}
+
+function calculateFee(){
+
+    const amount = parseInt(
+        document.getElementById('srvAmount').value
+    ) || 0;
+
+    let fee = 0;
+
+    if(amount < 1000000){
+
+        fee = 15000;
+
+    }else if(amount >= 1000000 && amount <= 5000000){
+
+        fee = 30000;
+
+    }else if(amount > 5000000){
+
+        fee = 70000;
+    }
+
+    document.getElementById('srvFee').value = fee;
 }
 
 function addTransaction(){
 
     const type = document.getElementById('srvType').value;
-    const amount = parseInt(document.getElementById('srvAmount').value) || 0;
-    const fee = parseInt(document.getElementById('srvFee').value) || 0;
+
+    const amount = parseInt(
+        document.getElementById('srvAmount').value
+    ) || 0;
+
+    const fee = Number(
+        document.getElementById('srvFee').value
+    );
 
     if(amount <= 0){
+
         alert('Vui lòng nhập số tiền hợp lệ');
         return;
     }
@@ -389,8 +462,8 @@ function addTransaction(){
 
     saveData();
 
-    document.getElementById('srvAmount').value='';
-    document.getElementById('srvFee').value='0';
+    document.getElementById('srvAmount').value = '';
+    document.getElementById('srvFee').value = '0';
 
     updateUI();
 }
@@ -402,7 +475,7 @@ function updateUI(){
     let totalRevenue = 0;
     let totalProfit = 0;
 
-    table.innerHTML='';
+    table.innerHTML = '';
 
     if(logs.length === 0){
 
@@ -424,7 +497,9 @@ function updateUI(){
             <tr>
                 <td>${log.type}</td>
                 <td>${log.amount.toLocaleString()}đ</td>
-                <td class="profit">+${log.fee.toLocaleString()}đ</td>
+                <td class="profit">
+                    +${log.fee.toLocaleString()}đ
+                </td>
                 <td>${log.time}</td>
             </tr>
         `;
@@ -439,7 +514,9 @@ function updateUI(){
 
 function clearHistory(){
 
-    const confirmDelete = confirm('Bạn muốn xóa toàn bộ lịch sử?');
+    const confirmDelete = confirm(
+        'Bạn muốn xóa toàn bộ lịch sử?'
+    );
 
     if(confirmDelete){
 
@@ -477,4 +554,3 @@ updateUI();
 
 </body>
 </html>
-```
